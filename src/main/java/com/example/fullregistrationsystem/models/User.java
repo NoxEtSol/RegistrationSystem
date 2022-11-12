@@ -26,14 +26,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails {
 
   @Id
-  @SequenceGenerator(name = "student_sequence",
-                    sequenceName = "student_sequence",
-                    allocationSize = 1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE,
-                  generator = "student_sequence")
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private String name;
-  private String username;
+  private String firstName;
+  private String lastName;
   private String email;
   private String password;
   @Enumerated(EnumType.STRING)
@@ -41,15 +37,12 @@ public class User implements UserDetails {
   private Boolean locked;
   private Boolean enabled;
 
-  public User(String name, String username, String email, String password, UserRole userRole,
-      Boolean locked, Boolean enabled) {
-    this.name = name;
-    this.username = username;
+  public User(String firstName, String lastName, String email, String password, UserRole userRole) {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.email = email;
     this.password = password;
     this.userRole = userRole;
-    this.locked = locked;
-    this.enabled = enabled;
   }
 
   @Override
@@ -65,7 +58,15 @@ public class User implements UserDetails {
 
   @Override
   public String getUsername() {
-    return username;
+    return email;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public String getLastName() {
+    return lastName;
   }
 
   @Override
